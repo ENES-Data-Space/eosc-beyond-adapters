@@ -214,6 +214,6 @@ class DataciteExportXML:
                 f.write(pretty_xml)
 
             exported_files.append(filepath)
-            print(f"Exported {filepath}")
+            #print(f"Exported {filepath}")
 
         return exported_files

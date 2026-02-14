@@ -23,13 +23,16 @@ class DataciteExportXML:
             header_el = ET.SubElement(record_el, "header")
 
             collection_name = ""
+
             for r in record.get("relatedIdentifiers", []):
-                if (
-                    r.get("relatedIdentifierType") == "Local"
-                    and r.get("relationType") == "IsPartOf"
-                ):
-                    collection_name = r.get("relatedIdentifier")
+                if r.get("relationType") == "IsPartOf":
+                    identifier = r.get("relatedIdentifier", "")
+                    if "/collections/" in identifier:
+                        collection_name = identifier.rstrip("/").split("/collections/")[-1]
+                    else:
+                        collection_name = identifier
                     break
+
 
             if "titles" in record and isinstance(record["titles"], list) and record["titles"]:
                  title = record["titles"][0].get("title", "unknown")

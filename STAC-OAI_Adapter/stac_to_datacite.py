@@ -1,14 +1,10 @@
-import threading
-if hasattr(threading, "_DummyThread"):
-    threading._DummyThread._delete = lambda self: None
-
+#python stac_to_datacite.py https://api.eneslab.pilot.eosc-beyond.eu/collections/CMIP_S3  
 import os
 import sys
 import re
 import json
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
 from utils.stac_api import StacApiUtils
 from utils.datacite_utils import DataciteExportXML
 
@@ -209,7 +205,7 @@ def main():
     collections = api.get_collections()
 
     if "/collections/" in input_url:
-        match = re.match(r"(.*)/collections/?([^/]*)$", input_url)
+        match = re.match(r"(.*)/collections/?([^/]*)", input_url)
         if not match:
             print("Invalid collection URL")
             sys.exit(1)

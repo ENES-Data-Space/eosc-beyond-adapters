@@ -143,7 +143,7 @@ def stac_item_to_datacite(item, base_url):
 
         return {
             "identifier": {
-                "identifier": f"{base_url}/collections/{col_id}/items/{item_id}",
+                "identifier": f"https://catalogue.eneslab.pilot.eosc-beyond.eu/collections/{col_id}/items/{item_id}",
                 "identifierType": "URL"
             },
             "creators": creators,

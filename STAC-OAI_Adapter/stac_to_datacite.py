@@ -216,6 +216,9 @@ def main():
     api = StacApiUtils(input_url)
     collections = api.get_collections()
 
+    if len(collections) == 0 :
+        logger.info("No Collection Found")
+
     if "/collections/" in input_url:
         match = re.match(r"(.*)/collections/?([^/]*)", input_url)
         if not match:

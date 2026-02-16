@@ -96,6 +96,7 @@ def stac_item_to_datacite(item, base_url):
         col_id = item["collection"]
         item_id = item["id"]
         pub_year = safe_year(props.get("creation_date") or props.get("datetime"))
+        creation_date = props.get("creation_date") or props.get("datetime")
 
         creators = []
         if props.get("contact"):
@@ -114,6 +115,15 @@ def stac_item_to_datacite(item, base_url):
             if props.get(k)
         ]
 
+        dates = []
+        if creation_date:
+            clean_date = creation_date.split("T")[0]
+            dates.append({
+                "date": clean_date,
+                "dateType": "Issued"
+            })
+
+    
         related = []
         for asset in assets.values():
             if asset.get("href"):
@@ -151,6 +161,7 @@ def stac_item_to_datacite(item, base_url):
             "publisher": props.get("cmip6:institution_id", "CMCC"),
             "publicationYear": pub_year,
             "subjects": subjects,
+            "dates": dates,
             "language": "eng",
             "resourceType": {
                 "resourceTypeGeneral": "Dataset",

@@ -6,6 +6,6 @@ logging.basicConfig(level=logging.INFO)
 url = "https://api.eneslab.pilot.eosc-beyond.eu/"
 client = STAC(url)
 
-collections = client.getcollection()
+collections = client.getcollections()
 
 print (collections)

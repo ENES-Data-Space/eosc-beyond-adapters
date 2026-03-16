@@ -15,7 +15,7 @@ class STAC :
         self.session.headers.update({
             "Content-Type": "application/json"
         })
-        
+
     def _request(self,Method : str , endpoint:str, **kwargs):
         url = f'{self.base_url}{endpoint}'
         self.logger.info(f"{Method} {url}")
@@ -30,5 +30,14 @@ class STAC :
         return None
 
 
-    def getcollection(self):
+    def getcollections(self):
         return self._request("GET","/collections")
+    
+    def getcollection(self, collection_id: str):
+        return self._request("GET",f"/collection/{collection_id}")
+    
+    def get_items(self, collection_id: str): 
+        return self._request("GET", f"/collections/{collection_id}/items")
+    
+    def add_item(self, item: dict):
+        return self._request( "POST", f"/collections/Shared Collection/items", json=item )

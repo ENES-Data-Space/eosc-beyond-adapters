@@ -1,4 +1,4 @@
-# 🌍 STAC Client CLI
+# STAC Client CLI
 
 A lightweight Python client and CLI tool to interact with a **STAC (SpatioTemporal Asset Catalog) API**.
 
@@ -10,17 +10,17 @@ This project provides:
 
 ---
 
-## 📦 Features
+## Features
 
-* 📂 List available collections
-* 📄 Retrieve items from a collection
-* ➕ Add new items (authenticated)
-* ✅ Validate STAC items before upload
-* 🔐 Token-based authentication (Bearer)    
+*  List available collections
+*  Retrieve items from a collection
+*  Add new items (authenticated)
+*  Validate STAC items before upload
+*  Token-based authentication (Bearer)    
 
 ---
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```text
 STAC_Client/
@@ -38,7 +38,7 @@ STAC_Client/
 
 ---
 
-## ⚙️ Requirements
+##  Requirements
 
 * Python 3.10+
 * STAC API running
@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Usage
+##  Usage
 
 Run CLI commands using:
 
@@ -61,7 +61,7 @@ python -m stac_cli.cli <command>
 
 ---
 
-## 📚 Commands
+##  Commands
 
 ### 1. List Collections
 
@@ -69,7 +69,7 @@ python -m stac_cli.cli <command>
 python -m stac_cli.cli collections
 ```
 
-📌 Fetch all available STAC collections.
+ Fetch all available STAC collections.
 
 ---
 
@@ -79,7 +79,7 @@ python -m stac_cli.cli collections
 python -m stac_cli.cli items <collection_id>
 ```
 
-📌 Example:
+ Example:
 
 ```bash
 python -m stac_cli.cli items shared_collection
@@ -99,7 +99,7 @@ python -m stac_cli.cli add-item \
 --description "<DESCRIPTION>"
 ```
 
-📌 Example:
+ Example:
 
 ```bash
 python -m stac_cli.cli add-item \
@@ -113,7 +113,7 @@ python -m stac_cli.cli add-item \
 
 ---
 
-## 🔐 Authentication
+##  Authentication
 
 * Required only for **adding items**
 * Token is passed via:
@@ -130,7 +130,7 @@ Authorization: Bearer <TOKEN>
 
 ---
 
-## 🧠 Template & Validation
+##  Template & Validation
 
 When adding an item:
 
@@ -140,7 +140,7 @@ When adding an item:
 
 ---
 
-## 📡 API Endpoints Used
+##  API Endpoints Used
 
 | Operation       | Method | Endpoint                               |
 | --------------- | ------ | -------------------------------------- |
@@ -151,7 +151,7 @@ When adding an item:
 
 ---
 
-## 🛠️ Development
+##  Development
 
 Run locally:
 

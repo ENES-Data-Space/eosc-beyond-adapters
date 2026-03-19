@@ -90,7 +90,7 @@ python -m stac_cli.cli items shared_collection
 ### 3. Add Item to `shared_collection`
 
 ```bash
-python -m stac_cli.cli add-item \
+python -m stac_cli.cli add_item \
 --token <TOKEN> \
 --id <ITEM_ID> \
 --lon <LONGITUDE> \
@@ -102,7 +102,7 @@ python -m stac_cli.cli add-item \
  Example:
 
 ```bash
-python -m stac_cli.cli add-item \
+python -m stac_cli.cli add_item \
 --token eyJhbGciOi... \
 --id test-item \
 --lon 12.49 \

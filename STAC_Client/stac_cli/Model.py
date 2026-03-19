@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List,Dict, Literal,Optional
 
 class Geometry(BaseModel):
-    Type: str 
+    type: str 
     coordinates :List[float]
 
 class Asset(BaseModel):

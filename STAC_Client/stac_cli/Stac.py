@@ -39,5 +39,5 @@ class STAC :
     def get_items(self, collection_id: str): 
         return self._request("GET", f"/collections/{collection_id}/items")
     
-    def add_item(self, item: dict):
-        return self._request( "POST", f"/collections/Shared Collection/items", json=item )
+    def add_item(self,collection_id,item: dict):
+        return self._request( "POST", f"/collections/{collection_id}/items", json=item )

@@ -30,14 +30,38 @@ class STAC :
         return None
 
 
+
     def getcollections(self):
-        return self._request("GET","/collections")
+        data = self._request("GET","/collections")
+        collections = data.get("collections",[])
+        return [c.get("id") for c in collections if "id" in c]
+    
     
     def getcollection(self, collection_id: str):
-        return self._request("GET",f"/collection/{collection_id}")
+        return self._request("GET",f"/collections/{collection_id}")
     
-    def get_items(self, collection_id: str): 
-        return self._request("GET", f"/collections/{collection_id}/items")
+    def get_items(self, collection_id: str,limit=1000): 
+        data = self._request("GET", f"/collections/{collection_id}/items?limit={limit}")
+        items = data.get("features",[])
+        return [item.get("id") for item in items if "id" in item]
     
     def add_item(self,collection_id,item: dict):
         return self._request( "POST", f"/collections/{collection_id}/items", json=item )
+    
+    def get_item(self, collection_id, item_id):
+        return self._request("GET",f"/collections/{collection_id}/items/{item_id}")
+    
+
+    def verify_token(self,token:str) -> bool:
+        try:
+            data = self._request("GET","/auth/realms/egi/protocol/openid-connect/userinfo",headers = {"Authorization": f"Bearer {token}",
+    "Content-type": "application/json"})
+            print(data)
+            response = data.get("email_verified")
+
+            if response:
+                return True
+            else :
+                return False
+        except Exception:
+            return False

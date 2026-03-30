@@ -1,162 +1,97 @@
 # STAC Client CLI
 
-A lightweight Python client and CLI tool to interact with a **STAC (SpatioTemporal Asset Catalog) API**.
-
-This project provides:
-
-* A reusable **STAC API client**
-* A **command-line interface (CLI)**
-* A **template generator** for creating valid STAC items
+A command-line tool for interacting with a STAC (SpatioTemporal Asset Catalog) API.
 
 ---
 
-## Features
+## Installation
 
-*  List available collections
-*  Retrieve items from a collection
-*  Add new items (authenticated)
-*  Validate STAC items before upload
-*  Token-based authentication (Bearer)    
-
----
-
-##  Project Structure
-
-```text
-STAC_Client/
-│
-├── stac_cli/
-│   ├── __init__.py
-│   ├── stac.py        # STAC API client
-│   ├── cli.py         # CLI commands
-│   ├── models.py      # Pydantic models
-│   └── template.py    # Item generator
-│
-├── requirements.txt
-└── README.md
-```
-
----
-
-##  Requirements
-
-* Python 3.10+
-* STAC API running
-
-Install dependencies:
+Clone the repository and install in editable mode:
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
+
+This will make the `stac_cli` command available in your terminal.
 
 ---
 
-##  Usage
-
-Run CLI commands using:
+## Usage
 
 ```bash
-python -m stac_cli.cli <command>
+stac_cli <command> <subcommand> [options]
 ```
 
 ---
 
-##  Commands
+## Commands
 
-### 1. List Collections
+### Collections
+
+Get all collections:
 
 ```bash
-python -m stac_cli.cli collections
+stac_cli collections get
 ```
 
- Fetch all available STAC collections.
-
----
-
-### 2. List Items in a Collection
+Get a specific collection:
 
 ```bash
-python -m stac_cli.cli items <collection_id>
+stac_cli collections get --collection_id CMIP_S3
 ```
 
- Example:
+---
+
+### Items
+
+Get all items in a collection:
 
 ```bash
-python -m stac_cli.cli items shared_collection
+stac_cli items get --collection_id CMIP_S3
 ```
 
----
-
-### 3. Add Item to `shared_collection`
+Get a specific item:
 
 ```bash
-python -m stac_cli.cli add_item \
---token <TOKEN> \
---id <ITEM_ID> \
---lon <LONGITUDE> \
---lat <LATITUDE> \
---asset <ASSET_URL> \
---description "<DESCRIPTION>"
+stac_cli items get --collection_id CMIP_S3 --item_id <ITEM_ID>
 ```
 
- Example:
+Add a new item:
 
 ```bash
-python -m stac_cli.cli add_item \
---token eyJhbGciOi... \
---id test-item \
---lon 12.49 \
---lat 41.89 \
---asset https://example.com/data.tif \
---description "Test upload"
+stac_cli items add \
+  --collection_id shared_collection \
+  --token <TOKEN> \
+  --file item.json
 ```
 
 ---
 
-##  Authentication
+### Authentication
 
-* Required only for **adding items**
-* Token is passed via:
+Verify a token:
 
 ```bash
---token <TOKEN>
+stac_cli auth verify --token <TOKEN>
 ```
 
-* Automatically included in request headers:
-
-```text
-Authorization: Bearer <TOKEN>
-```
+Returns `SUCCESS` or `FAIL`.
 
 ---
 
-##  Template & Validation
+### Template
 
-When adding an item:
-
-1. A STAC item is generated using a template
-2. The item is validated using **Pydantic models**
-3. Invalid data raises an error before sending the request
-
----
-
-##  API Endpoints Used
-
-| Operation       | Method | Endpoint                               |
-| --------------- | ------ | -------------------------------------- |
-| Get collections | GET    | `/collections`                         |
-| Get items       | GET    | `/collections/{collection_id}/items`   |
-| Add item        | POST   | `/collections/shared_collection/items` |
-
-
----
-
-##  Development
-
-Run locally:
+Generate a STAC item template:
 
 ```bash
-python -m stac_cli.cli collections
+stac_cli items create_template
 ```
 
 ---
+
+## Notes
+
+* Input files must be valid JSON
+* Assets must include a valid `href` (URL)
+* Geometry must follow GeoJSON format
+* A valid token is required for adding items

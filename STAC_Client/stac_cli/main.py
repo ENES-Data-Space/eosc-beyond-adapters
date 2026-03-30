@@ -1,11 +1,4 @@
-import logging
-from Stac import STAC
+from stac_cli.cli import stac_cli
 
-
-logging.basicConfig(level=logging.INFO)
-url = "https://api.eneslab.pilot.eosc-beyond.eu/"
-client = STAC(url)
-
-collections = client.getcollections()
-
-print (collections)
+if __name__ == "__main__":
+    stac_cli()

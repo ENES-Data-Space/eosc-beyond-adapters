@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from .Stac import STAC
 from .Template import create_item_template,validate_item
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "https://api.eneslab.pilot.eosc-beyond.eu/"
 
 
 @click.group()
@@ -69,10 +69,13 @@ def add_item(collection_id, token, file_path):
     item.setdefault("properties", {})
     item["properties"]["datetime"] = datetime.now(timezone.utc).isoformat()
 
-    response = client.add_item(collection_id, item)
-
-    print(json.dumps(response, indent=2))
-    print(f"Item Added to {collection_id}")
+    try:
+        validate_item(item)
+        response = client.add_item(collection_id, item)
+        print(json.dumps(response, indent=2))
+        print(f"Item added to {collection_id}")
+    except ValueError as e:
+        print(f"Item not added: {e}")
 
 @items.command("create_template")
 @click.option("--output", default="item_template.json")

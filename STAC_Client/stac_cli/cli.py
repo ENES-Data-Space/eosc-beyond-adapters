@@ -68,6 +68,7 @@ def add_item(collection_id, token, file_path):
     item["id"] = str(uuid.uuid4())
     item.setdefault("properties", {})
     item["properties"]["datetime"] = datetime.now(timezone.utc).isoformat()
+    item.setdefault("links", [])
 
     try:
         validate_item(item)

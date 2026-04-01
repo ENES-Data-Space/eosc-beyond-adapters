@@ -31,5 +31,3 @@ class STACItem(BaseModel):
     @validator("assets")
     def validate_assets(cls, v):
         return v or {}
-
-    links: List = Field(default_factory=list)

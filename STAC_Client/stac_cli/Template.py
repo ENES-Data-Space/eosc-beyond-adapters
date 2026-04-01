@@ -11,8 +11,9 @@ def create_item_template(output_dir: str="item_template.json"):
         "collection": "shared_collection",
         "geometry": {
             "type": "Polygon",
-            "coordinates": [
-                 [
+            "coordinates": 
+            [
+                    [
                         [-180, -90],
                         [180, -90],
                         [180, 90],
@@ -34,8 +35,7 @@ def create_item_template(output_dir: str="item_template.json"):
                 "type": "application/json",
                 "title": "Main asset"
             }
-        },
-        "links": []
+        }
     }
 
     output_file = Path(output_dir)

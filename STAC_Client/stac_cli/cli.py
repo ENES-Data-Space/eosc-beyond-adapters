@@ -1,5 +1,6 @@
 import click
 import json
+import os
 import uuid
 from datetime import datetime, timezone
 from .Stac import STAC
@@ -29,6 +30,7 @@ def get_collections(collection_id):
     else:
         data = client.getcollections()
 
+
     print(json.dumps(data, indent=2))
 
 
@@ -48,7 +50,6 @@ def get_items(collection_id, item_id):
         data = client.get_item(collection_id, item_id)
     else:
         data = client.get_items(collection_id)
-
     print(json.dumps(data, indent=2))
 
 
@@ -57,9 +58,10 @@ def get_items(collection_id, item_id):
 @click.option("--token", required=True)
 @click.option("--file", "file_path", required=True)
 def add_item(collection_id, token, file_path):
+    
+    token = resolve_token(token)
     client = STAC(BASE_URL, token)
-
-
+    
     with open(file_path, "r", encoding="utf-8") as f:
         item = json.load(f)
 
@@ -73,10 +75,14 @@ def add_item(collection_id, token, file_path):
     try:
         validate_item(item)
         response = client.add_item(collection_id, item)
-        print(json.dumps(response, indent=2))
+        if "detail" in response:
+            for err in response["detail"]:
+                print(err.get("msg"))
+            return
+        #print(json.dumps(response, indent=2))
         print(f"Item added to {collection_id}")
     except ValueError as e:
-        print(f"Item not added: {e}")
+        print(f"Item not added:")
 
 @items.command("create_template")
 @click.option("--output", default="item_template.json")
@@ -88,16 +94,28 @@ def create_template_cmd(output):
 def auth():
     pass
 
+def resolve_token(cli_token):
+    token = cli_token or os.getenv("TOKEN")
+    if not token:
+        raise ValueError("Token not provided. Use --token or export TOKEN.")
+    return token
 
 @auth.command("verify")
-@click.option("--token", required=True)
+@click.option("--token", required=False)
 def verify_token(token):
-    client = STAC("https://aai-demo.egi.eu")
-    result = client.verify_token(token)
-    if result:
-        print("Token Valid")
-    else : 
-        print("Token Invalid")
+    try:
+        token = resolve_token(token)
+        client = STAC("https://aai-demo.egi.eu")
+
+        result = client.verify_token(token)
+
+        if result:
+            print("Token Valid")
+        else:
+            print("Token Invalid")
+
+    except ValueError as e:
+        print(e)
 
 
 

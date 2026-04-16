@@ -61,7 +61,7 @@ Add a new item:
 ```bash
 stac_cli items add \
   --collection_id shared_collection \
-  --token <TOKEN> \
+  --token <TOKEN> or $TOEKN\
   --file item.json
 ```
 
@@ -72,7 +72,7 @@ stac_cli items add \
 Verify a token:
 
 ```bash
-stac_cli auth verify --token <TOKEN>
+stac_cli auth verify --token <TOKEN> or $TOEKN
 ```
 
 Returns `SUCCESS` or `FAIL`.

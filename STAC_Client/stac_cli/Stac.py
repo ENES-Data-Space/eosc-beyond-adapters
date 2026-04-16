@@ -16,18 +16,18 @@ class STAC :
             "Content-Type": "application/json"
         })
 
-    def _request(self,Method : str , endpoint:str, **kwargs):
-        url = f'{self.base_url}{endpoint}'
+    def _request(self, Method: str, endpoint: str, **kwargs):
+        url = f"{self.base_url}{endpoint}"
         self.logger.info(f"{Method} {url}")
-        respond = self.session.request(Method,url,**kwargs)
 
-        if not respond.ok:
-            self.logger.error(respond.text)
-            respond.raise_for_status()
-        else:
-            return respond.json()
+        response = self.session.request(Method, url, **kwargs)
 
-        return None
+        try:
+            data = response.json()
+        except ValueError:
+            data = {"detail": [{"msg": response.text}]}
+
+        return data
 
 
 
